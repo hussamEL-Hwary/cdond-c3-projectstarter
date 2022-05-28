@@ -86,9 +86,10 @@ jobs:
       - run:
           name: scan backend
           command: |
-            cd backend
-            npm install
-            npm audit --audit-level=critical --force
+              cd backend
+              npm install 
+              npm audit fix --audit-level=critical --force             
+              npm audit --audit-level=critical
 
 workflows:
   default:
