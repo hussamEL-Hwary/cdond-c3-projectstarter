@@ -57,7 +57,7 @@ jobs:
           keys: [backend-build]
       - run:
           name: backend run test
-          command:
+          command: |
             cd backend
             npm run test
 
