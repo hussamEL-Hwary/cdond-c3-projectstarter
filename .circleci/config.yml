@@ -82,10 +82,10 @@ jobs:
       - restore_cache:
           keys: [backend-buid]
       - run:
-        name: scan backend
-        command: |
-          cd backend
-          npm audit --audit-level=critical
+          name: scan backend
+          command: |
+            cd backend
+            npm audit --audit-level=critical
 
 workflows:
   default:
