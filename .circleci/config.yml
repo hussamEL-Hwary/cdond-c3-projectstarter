@@ -114,7 +114,7 @@ jobs:
       - slack/notify:
           event: pass
           channel: testing
-          template: sucess_taggged_deployment_1
+          template: success_tagged_deployment_1
 
 
 workflows:
