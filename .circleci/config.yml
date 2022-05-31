@@ -58,6 +58,7 @@ jobs:
           command: | 
             cd frontend
             npm run test
+      - notify_on_failure
   
   test-backend:
     docker:
@@ -71,6 +72,7 @@ jobs:
           command: |
             cd backend
             npm run test
+      - notify_on_failure
   
   scan-frontend:
     docker:
@@ -86,6 +88,7 @@ jobs:
               npm install 
               npm audit fix --audit-level=critical --force             
               npm audit --audit-level=critical
+      - notify_on_failure
   
   scan-backend:
     docker:
@@ -99,7 +102,8 @@ jobs:
           command: |
               cd backend
               npm install 
-              npm audit fix --audit-level=critical --force             
+              npm audit fix --force --audit-level=critical
+              npm audit fix --force --audit-level=critical
               npm audit --audit-level=critical
       - notify_on_failure
 
