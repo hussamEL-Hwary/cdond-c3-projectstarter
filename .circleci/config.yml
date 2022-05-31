@@ -106,6 +106,16 @@ jobs:
               npm audit fix --force --audit-level=critical
               npm audit --audit-level=critical
       - notify_on_failure
+  
+  notify_on_sucess:
+    docker: 
+      - image: cimg/base
+    steps:
+      - slack/notify:
+          event: pass
+          channel: testing
+          template: sucess_taggged_deployment_1
+
 
 workflows:
   default:
@@ -120,3 +130,10 @@ workflows:
           requires: [build-frontend]
       - scan-backend:
           requires: [build-backend]
+      - notify_on_sucess:
+          requires:
+            - test-frontend
+            - test-backrnd
+            - scan-frontend
+            - scan-backend
+
