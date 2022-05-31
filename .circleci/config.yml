@@ -133,7 +133,7 @@ workflows:
       - notify_on_sucess:
           requires:
             - test-frontend
-            - test-backrnd
+            - test-backend
             - scan-frontend
             - scan-backend
 
