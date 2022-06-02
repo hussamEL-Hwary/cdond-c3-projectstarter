@@ -10,11 +10,6 @@ commands:
           event: fail
           channel: testing
           template: basic_fail_1
-  
-  install-awscli:
-    steps:
-
-  
 
 jobs:
   build-frontend:
@@ -185,4 +180,3 @@ workflows:
             - test-backend
             - scan-frontend
             - scan-backend
-
