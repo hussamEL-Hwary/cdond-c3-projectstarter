@@ -11,6 +11,10 @@ commands:
           channel: testing
           template: basic_fail_1
   
+  install-awscli:
+    steps:
+
+  
 
 jobs:
   build-frontend:
@@ -112,11 +116,10 @@ jobs:
   deploy-infrastructure:
     docker:
       # Docker image here that supports AWS CLI
-      - image: cimg/base:stable
+      - image: amazon/aws-cli
     steps:
       # Checkout code from git
       - checkout
-      - install-awscli
       - run:
           name: Ensure back-end infrastructure exists
           command: |
