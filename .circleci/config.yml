@@ -253,7 +253,9 @@ jobs:
                 curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d "1"
             fi
       - destroy-environment
-      - revert-migrations
+      - revert-migrations:
+          ${CIRCLE_WORKFLOW_ID:0:7}
+
 
   deploy-frontend:
     docker:
@@ -285,7 +287,8 @@ jobs:
             aws s3 cp dit s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 
       - destroy-environment
-      - revert-migrations
+      - revert-migrations:
+          ${CIRCLE_WORKFLOW_ID:0:7}
   
   notify_on_sucess:
     docker: 
@@ -316,6 +319,8 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
       - notify_on_sucess:
           requires:
             - test-frontend
