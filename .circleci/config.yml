@@ -176,15 +176,15 @@ jobs:
       - attach_workspace:
           at: ~/
 
-      - run:
-          name: Install dependencies
-          command: |
-            pip install awscli
-            apk add --update ansible
-            sudo apt-get install curl
-            sudo apt-get install jq
-            sudo apt-get install tar
-            sudo apt-get install gzip
+      #- run:
+          #name: Install dependencies
+          #command: |
+           # pip install awscli
+           # apk add --update ansible
+           # sudo apt-get install curl
+           # sudo apt-get install jq
+           # sudo apt-get install tar
+           # sudo apt-get install gzip
       #- run: cat .circleci/ansible/inventory.txt
       #- run:
        #   name: Configure server
