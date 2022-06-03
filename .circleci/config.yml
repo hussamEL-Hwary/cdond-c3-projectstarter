@@ -181,10 +181,10 @@ jobs:
           command: |
             pip install awscli
             apk add --update ansible
-            yum -y install curl
-            yum -y install jq
-            yum -y install tar
-            yum -y install gzip
+            apk add --update curl
+            apk add --update jq
+            apk add --update tar
+            apk add --update gzip
       - run: cat .circleci/ansible/inventory.txt
       - run:
           name: Configure server
