@@ -4,6 +4,17 @@ orbs:
   slack: circleci/slack@4.9.3
 
 commands:
+
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID. 
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+
   notify_on_failure:
     steps:
       - slack/notify:
@@ -146,12 +157,41 @@ jobs:
                 --query 'Reservations[*].Instances[*].PublicIpAddress' \
                 --output text)
             echo $BACKEND_PUBLIC_IP >> .circleci/ansible/inventory.txt
+            cat .circleci/ansible/configure-server.yml
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure
+      - destroy-environment
       - notify_on_failure
+
+  configure-infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["92:a6:d1:e3:19:a4:ed:50:bc:36:d4:6b:2f:cb:d9:d4"]
+
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Install dependencies
+          command: |
+            pip install awscli
+            apk add --update ansible
+            sudo apt-get install curl
+            sudo apt-get install jq
+            sudo apt-get install tar
+            sudo apt-get install gzip
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml  
+            
+      - destroy-environment:    
 
   
   notify_on_sucess:
