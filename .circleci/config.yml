@@ -186,10 +186,10 @@ jobs:
             sudo apt-get install tar
             sudo apt-get install gzip
       - run: cat .circleci/ansible/inventory.txt
-      - run:
-          name: Configure server
-          command: |
-            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml  
+      #- run:
+       #   name: Configure server
+        #  command: |
+         #   ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml  
             
       - destroy-environment:    
 
