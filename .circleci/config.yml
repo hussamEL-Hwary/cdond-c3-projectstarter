@@ -317,9 +317,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible rsync 
-            apk add curl
-            pip3 install awscli
+            cd backend
+            npm install
       - run:
           name: pakage bacend
           command: |
