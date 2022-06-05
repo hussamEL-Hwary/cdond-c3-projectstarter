@@ -320,7 +320,7 @@ jobs:
             apk add --update ansible rsync 
             apk add curl
             pip3 install awscli
-      -run:
+      - run:
           name: pakage bacend
           command: |
             cd backend

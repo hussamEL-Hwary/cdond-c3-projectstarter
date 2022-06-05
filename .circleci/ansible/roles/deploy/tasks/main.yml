@@ -13,3 +13,9 @@
   shell: |
     cd ~/backend-app
     npm i
+
+- name: "install pm2"
+  shell: |
+    cd ~/backend-app/dist
+    pm2 stop default
+    pm2 start main.js
