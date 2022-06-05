@@ -33,7 +33,18 @@ commands:
           command: |
             curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
             sudo apt install nodejs -y
-  
+
+  install-ansible:
+    description: install ansible
+    steps:
+      - run:
+          name: install ansible
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common -y 
+            sudo apt-add-repository --yes --update ppa:ansible/ansible
+            sudo apt-install ansible -y
+
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
@@ -287,6 +298,50 @@ jobs:
       - destroy-environment
       - revert-migrations:
           Workflow_Id: ${CIRCLE_WORKFLOW_ID:0:7}
+
+  deploy-backend:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - install_awscli
+      - install-nodejs
+      - install-ansible
+      
+      - add_ssh_keys:
+          fingerprints: ["92:a6:d1:e3:19:a4:ed:50:bc:36:d4:6b:2f:cb:d9:d4"]
+      
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible rsync 
+            apk add curl
+            pip3 install awscli
+      -run:
+          name: pakage bacend
+          command: |
+            cd backend
+            npm run build
+            tar -czf artifact.tar.gz dist/* package*
+            cd ..
+            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+      - run:
+          name: Deploy backend
+          command: |
+            export TYPEORM_MIGRATIONS_DIR=./migrations
+            export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
+            export TYPEORM_MIGRATIONS=./migrations/*.ts
+
+            cd .circleci/ansible
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml
+      
+      - destroy-environment
+      - revert-migrations:
+          Workflow_Id: ${CIRCLE_WORKFLOW_ID:0:7}
   
   notify_on_sucess:
     docker: 
@@ -318,6 +373,8 @@ workflows:
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
           requires: [run-migrations]
       - notify_on_sucess:
           requires:
