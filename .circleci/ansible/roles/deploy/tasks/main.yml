@@ -1,0 +1,15 @@
+---
+- name: "create backend app"
+  file: 
+    path: ~/backend-app
+    state: directory
+
+- name: "unarchieve backend files"
+  unarchive:
+    src: artifact.tar.gz
+    dest: ~/backend-app
+
+- name: "install node dependances"
+  shell: |
+    cd ~/backend-app
+    npm i
