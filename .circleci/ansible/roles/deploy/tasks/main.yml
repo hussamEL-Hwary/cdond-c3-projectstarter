@@ -19,7 +19,7 @@
 
 - name: "Executing Node app with PM2"
   args:
-    chdir: ~/backend/dist
+    chdir: /home/ubuntu/backend/dist
   environment:
       ENVIRONMENT: production
       TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
@@ -32,5 +32,6 @@
       TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
       TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
   shell: |
+    cd /home/ubuntu/backend/dist
     pm2 stop default
     pm2 start main.js
