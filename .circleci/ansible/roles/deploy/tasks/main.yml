@@ -16,6 +16,7 @@
     cd /home/ubuntu/backend
     npm i
 - name: "Executing Node app with PM2"
+  become: true
   shell: |
     cd /home/ubuntu/backend/dist
     pm2 stop default
