@@ -19,7 +19,7 @@
 
 - name: "Executing Node app with PM2"
   args:
-    chdir: /home/ubuntu/backend/dist
+    chdir: chdir: cd /home/ubuntu/backend/dist
   environment:
       ENVIRONMENT: production
       TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
@@ -33,5 +33,14 @@
       TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
   shell: |
     cd /home/ubuntu/backend/dist
+    export TYPEORM_CONNECTION="{{ lookup('env', 'TYPEORM_CONNECTION') }}"
+    export TYPEORM_MIGRATIONS_DIR="./migrations"
+    export TYPEORM_MIGRATIONS="./migrations/*.js"
+    export TYPEORM_ENTITIES="./modules/domain/**/*.entity.js"
+    export TYPEORM_HOST="udapeople-prod.cbsvnr80nf1o.us-east-1.rds.amazonaws.com"
+    export TYPEORM_PORT="5432"
+    export TYPEORM_USERNAME="postgres"
+    export TYPEORM_PASSWORD: "12345678"
+    export TYPEORM_DATABASE: "udapeople-prod"
     pm2 stop default
     pm2 start main.js
