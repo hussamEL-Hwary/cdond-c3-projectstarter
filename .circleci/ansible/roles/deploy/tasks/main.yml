@@ -20,7 +20,7 @@
 - name: "Executing Node app with PM2"
   shell: |
     cd /home/ubuntu/backend/dist
-    export TYPEORM_CONNECTION="{{ lookup('env', 'TYPEORM_CONNECTION') }}"
+    export TYPEORM_CONNECTION="postgres"
     export TYPEORM_MIGRATIONS_DIR="./migrations"
     export TYPEORM_MIGRATIONS="./migrations/*.js"
     export TYPEORM_ENTITIES="./modules/domain/**/*.entity.js"
@@ -28,6 +28,6 @@
     export TYPEORM_PORT="5432"
     export TYPEORM_USERNAME="postgres"
     export TYPEORM_PASSWORD="12345678"
-    export TYPEORM_DATABASE="udapeople-prod"
+    export TYPEORM_DATABASE="postgres"
     pm2 stop default
     pm2 start main.js
