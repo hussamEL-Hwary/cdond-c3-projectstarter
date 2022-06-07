@@ -27,7 +27,7 @@
     export TYPEORM_HOST="udapeople-prod.cbsvnr80nf1o.us-east-1.rds.amazonaws.com"
     export TYPEORM_PORT="5432"
     export TYPEORM_USERNAME="postgres"
-    export TYPEORM_PASSWORD: "12345678"
-    export TYPEORM_DATABASE: "udapeople-prod"
+    export TYPEORM_PASSWORD="12345678"
+    export TYPEORM_DATABASE="udapeople-prod"
     pm2 stop default
     pm2 start main.js
