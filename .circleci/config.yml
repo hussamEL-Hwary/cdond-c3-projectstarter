@@ -58,7 +58,7 @@ commands:
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS = $(curl --insecure https://kvdb.io/${KVDB_BUCKET}/migration_<<parameters.Workflow_Id>>)
-            if(( $SUCCESS==1 )); 
+            if (( $SUCCESS == 1 )); 
             then
               cd ~/project/backend
               npm install
@@ -261,9 +261,10 @@ jobs:
       - run:
           name: Send migration results to kvdb
           command: |
-            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+            if grep -q "has been executed successfully." /backend/migrations_dump.txt
             then
                 curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d "1"
+                echo "okokoko"
             fi
       - destroy-environment
       - revert-migrations:
