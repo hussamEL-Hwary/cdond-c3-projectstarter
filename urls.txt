@@ -1,5 +1,11 @@
-[GiHub] https://github.com/hussamEL-Hwary/cdond-c3-projectstarter
+[GiHub] 
+https://github.com/hussamEL-Hwary/cdond-c3-projectstarter
 
-[S3 Bucket] last one
+[S3 Bucket]
+http://udapeople-6295772.s3-website.us-east-1.amazonaws.com/
 
+[Backend server]
+http://3.84.190.63:3030/
 
+[promethus server]
+http://ec2-54-210-131-61.compute-1.amazonaws.com:9090/graph
