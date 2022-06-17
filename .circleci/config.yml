@@ -169,7 +169,6 @@ jobs:
               npm audit --audit-level=critical
       - notify_on_failure
   
-
   deploy-infrastructure:
     docker:
       # Docker image here that supports AWS CLI
@@ -264,12 +263,10 @@ jobs:
             if grep -q "has been executed successfully." /backend/migrations_dump.txt
             then
                 curl https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d "1"
-                echo "okokoko"
             fi
       - destroy-environment
       - revert-migrations:
           Workflow_Id: ${CIRCLE_WORKFLOW_ID:0:7}
-
 
   deploy-frontend:
     docker:
@@ -288,6 +285,7 @@ jobs:
           command: |
             BACKEND_IP=$(aws ec2 describe-instances \
                 --query 'Reservations[*].Instances[*].PublicIpAddress' \
+                --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
                 --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
@@ -378,9 +376,9 @@ jobs:
             else
               exit 1
             fi
-      #- destroy-environment
-      #- revert-migrations:
-       #   Workflow_Id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment
+      - revert-migrations:
+          Workflow_Id: ${CIRCLE_WORKFLOW_ID:0:7}
   
   cloudfront-update:
     docker:
