@@ -2,13 +2,13 @@
 https://github.com/hussamEL-Hwary/cdond-c3-projectstarter
 
 [S3 Bucket]
-http://udapeople-0f483dd.s3-website.us-east-1.amazonaws.com/
+http://udapeople-6b0a39f.s3-website.us-east-1.amazonaws.com/
 
 [Backend server]
-ec2-44-204-86-181.compute-1.amazonaws.com
+ec2-52-87-157-164.compute-1.amazonaws.com
 
 [promethus server]
-http://ec2-54-161-166-70.compute-1.amazonaws.com:9090/graph
+http://ec2-3-86-239-95.compute-1.amazonaws.com:9090/
 
 [cloudfront]
-http://dnpxexnf62em9.cloudfront.net/
+http://d1hvtu2hfv7gds.cloudfront.net/
