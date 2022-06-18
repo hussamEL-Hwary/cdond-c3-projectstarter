@@ -9,3 +9,6 @@ http://3.84.190.63:3030/
 
 [promethus server]
 http://ec2-54-210-131-61.compute-1.amazonaws.com:9090/graph
+
+[cloudfront]
+https://d1hvtu2hfv7gds.cloudfront.ne
